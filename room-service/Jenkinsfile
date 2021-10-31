@@ -2,26 +2,34 @@ pipeline{
     
     agent any
     
+    environment {
+        GITHUB_ORG = 'landon-hotel-lab-kevin'
+        CONTAINER_REGISTRY = "ghcr.io/${GITHUB_ORG}/"
+        ARTIFACT_ID = readMavenPom().getArtifactId()
+        JAR_NAME = "${ARTIFACT_ID}-${BUILD_NUMBER}"
+        IMAGE_NAME = "${CONTAINER_REGISTRY}:${ARTIFACT_ID}"
+    }
+    
     stages {
     
     	stage("Build Application"){
     	
     		steps{
-    			sh "echo Performing Maven build:"
+    			sh "echo Performing Maven build: ${ARTIFACT_ID}"
     		}
     	}
     	
     	stage("Build Application"){
     	
     		steps{
-    			sh "echo Building container image:"
+    			sh "echo Building container image: ${IMAGE_NAME}"
     		}
     	}
     	
     	stage("Build Application"){
     	
     		steps{
-    			sh "echo Publishing container image to:"
+    			sh "echo Publishing container image to: ${CONTAINER_REGISTRY}"
     		}
     	}    	    	
     }
