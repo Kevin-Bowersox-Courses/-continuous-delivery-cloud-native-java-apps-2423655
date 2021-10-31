@@ -1,0 +1,28 @@
+pipeline{
+    
+    agent any
+    
+    stages {
+    
+    	stage("Build Application"){
+    	
+    		steps{
+    			sh "echo Performing Maven build:"
+    		}
+    	}
+    	
+    	stage("Build Application"){
+    	
+    		steps{
+    			sh "echo Building container image:"
+    		}
+    	}
+    	
+    	stage("Build Application"){
+    	
+    		steps{
+    			sh "echo Publishing container image to:"
+    		}
+    	}    	    	
+    }
+}
