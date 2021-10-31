@@ -6,16 +6,28 @@ pipeline{
         GITHUB_ORG = 'landon-hotel-lab-kevin'
         CONTAINER_REGISTRY = "ghcr.io/${GITHUB_ORG}/"
         ARTIFACT_ID = readMavenPom().getArtifactId()
+        
         JAR_NAME = "${ARTIFACT_ID}-${BUILD_NUMBER}"
+        JAR_LOCATION = "target/${JAR_NAME}.jar"
+        
         IMAGE_NAME = "${CONTAINER_REGISTRY}${ARTIFACT_ID}"
+        
     }
     
     stages {
     
     	stage("Build Application"){
-    	
+    		
+    		agent{
+    			docker {
+    				image "openjdk:11"
+    				reuseNode true
+    			}
+    		}
+    		
     		steps{
     			sh "echo Performing Maven build: ${ARTIFACT_ID}"
+    			sh "./mvnw -DjarName=${JAR_NAME} clean verify"
     		}
     	}
     	
