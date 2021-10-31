@@ -33,7 +33,7 @@ public class BasicGuestService implements GuestService {
 				.map(String::valueOf)
 				.collect(Collectors.joining(","));
 
-		ArrayNode results = webClient.get()
+		return webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.path(this.guestServicePath)
 						.queryParam("ids", "{ids}")
@@ -42,8 +42,6 @@ public class BasicGuestService implements GuestService {
 				.retrieve()
 				.bodyToMono(ArrayNode.class)
 				.block();
-
-		return results;
 	}
 
 }
